@@ -492,6 +492,7 @@ public class ParticleSimulator extends JFrame {
         @Override
         protected void paintComponent(Graphics g) {
             super.paintComponent(g);
+            g.setColor(Color.BLACK);
             for (Particle p : particles) {
                 p.draw(g);
             }
@@ -634,18 +635,6 @@ public class ParticleSimulator extends JFrame {
             drawPanel.repaint();
         }
     }
-    public void keyPressed(KeyEvent e) {
-        int keyCode = e.getKeyCode();
-        if (keyCode == KeyEvent.VK_W || keyCode == KeyEvent.VK_UP) {
-            moveSprite(0, -1);
-        } else if (keyCode == KeyEvent.VK_A || keyCode == KeyEvent.VK_LEFT) {
-            moveSprite(-1, 0);
-        } else if (keyCode == KeyEvent.VK_S || keyCode == KeyEvent.VK_DOWN) {
-            moveSprite(0, 1);
-        } else if (keyCode == KeyEvent.VK_D || keyCode == KeyEvent.VK_RIGHT) {
-            moveSprite(1, 0);
-        }
-    }
 
     private void setupKeyListener() {
         drawPanel.setFocusable(true);
@@ -655,13 +644,13 @@ public class ParticleSimulator extends JFrame {
             public void keyPressed(KeyEvent e) {
                 int keyCode = e.getKeyCode();
                 if (keyCode == KeyEvent.VK_W || keyCode == KeyEvent.VK_UP) {
-                    moveSprite(0, -10);
+                    moveSprite(0, -1);
                 } else if (keyCode == KeyEvent.VK_A || keyCode == KeyEvent.VK_LEFT) {
-                    moveSprite(-10, 0);
+                    moveSprite(-1, 0);
                 } else if (keyCode == KeyEvent.VK_S || keyCode == KeyEvent.VK_DOWN) {
-                    moveSprite(0, 10);
+                    moveSprite(0, 1);
                 } else if (keyCode == KeyEvent.VK_D || keyCode == KeyEvent.VK_RIGHT) {
-                    moveSprite(10, 0);
+                    moveSprite(1, 0);
                 }
             }
         });
