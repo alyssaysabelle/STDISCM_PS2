@@ -35,6 +35,7 @@ public class ParticleSimulator extends JFrame {
     private long lastUpdateTime;
 
     private final ForkJoinPool pool;
+    private final JComboBox<String> mode;
     public ParticleSimulator() {
         super("Particle Simulator");
         pool = new ForkJoinPool();
@@ -63,6 +64,33 @@ public class ParticleSimulator extends JFrame {
         numParticlesField = new JTextField(10);
         endAngleField = new JTextField(10);
         endVelocityField = new JTextField(10);
+
+        String[] modeOptions = {"Developer Mode", "Explorer Mode"};
+        mode = new JComboBox<>(modeOptions);
+        mode.setPreferredSize(new Dimension(200, mode.getPreferredSize().height));
+        mode.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String option = (String) mode.getSelectedItem();
+                inputPanel.removeAll();
+                inputPanel.revalidate();
+                inputPanel.repaint();
+                if(option == "Developer Mode"){
+                    System.out.println("Developer Mode");
+                    showCombobox(inputPanel, true);
+                    // get selected string from combobox
+                    String particle = (String) combobox.getSelectedItem();
+                    if(particle == "Single Particle")
+                        showInputField(inputPanel, "Single Particle", "");
+                    else if(particle == "Multiple Particles")
+                        showInputField(inputPanel, "Multiple Particles", "Velocity & Angle");
+                }
+                else if(option == "Explorer Mode"){
+                    System.out.println("Explorer Mode");
+                    showModeCombobox(inputPanel);
+                }
+            }
+        });
 
         String[] options = {"Single Particle", "Multiple Particles"};
         combobox = new JComboBox<>(options);
@@ -116,6 +144,10 @@ public class ParticleSimulator extends JFrame {
         controlPanel.add(inputPanel, BorderLayout.NORTH);
 
     }
+    private void showModeCombobox(JPanel inputPanel){
+        inputPanel.add(new JLabel(" Mode:"));
+        inputPanel.add(mode);
+    }
 
     /*
     private void showWallInput(JPanel inputPanel){
@@ -166,6 +198,10 @@ public class ParticleSimulator extends JFrame {
         }
     }
     private void showInputField(JPanel inputPanel, String particle, String constant){
+        inputPanel.removeAll();
+        inputPanel.revalidate();
+        inputPanel.repaint();
+        showModeCombobox(inputPanel);
         Boolean show = false;
         if(particle == "Multiple Particles"){
             show = true;
@@ -367,11 +403,6 @@ public class ParticleSimulator extends JFrame {
                 });
             }
         }
-    }
-    private void setupSimulation() {
-        // Initialize simulation entities here
-
-
     }
     public int getAndResetFrameCount() {
         return actualFramesDrawn.getAndSet(0);
