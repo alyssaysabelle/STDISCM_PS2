@@ -2,6 +2,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.awt.geom.Line2D;
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
@@ -36,6 +38,7 @@ public class ParticleSimulator extends JFrame {
 
     private final ForkJoinPool pool;
     private final JComboBox<String> mode;
+    private Sprite sprite;
     public ParticleSimulator() {
         super("Particle Simulator");
         pool = new ForkJoinPool();
@@ -77,6 +80,7 @@ public class ParticleSimulator extends JFrame {
                 inputPanel.repaint();
                 if(option == "Developer Mode"){
                     System.out.println("Developer Mode");
+                    sprite = null;
                     showCombobox(inputPanel, true);
                     // get selected string from combobox
                     String particle = (String) combobox.getSelectedItem();
@@ -88,6 +92,8 @@ public class ParticleSimulator extends JFrame {
                 else if(option == "Explorer Mode"){
                     System.out.println("Explorer Mode");
                     showModeCombobox(inputPanel);
+                    sprite = new Sprite(100, 100); // temp location
+                    setupKeyListener();
                 }
             }
         });
@@ -490,6 +496,10 @@ public class ParticleSimulator extends JFrame {
                 p.draw(g);
             }
             walls.parallelStream().forEach(w -> w.draw(g));
+            if(sprite != null){
+                sprite.draw(g);
+            }
+
             g.drawString("FPS: " + fps, 10, 20);
             actualFramesDrawn.incrementAndGet();
         }
@@ -615,5 +625,45 @@ public class ParticleSimulator extends JFrame {
         public void draw(Graphics g) {
             g.drawLine(startX, drawPanel.getHeight() - startY, endX, drawPanel.getHeight() - endY);
         }
+    }
+
+    // SPRITE
+    public void moveSprite(int dx, int dy) {
+        if (sprite != null) {
+            sprite.move(dx, dy);
+            drawPanel.repaint();
+        }
+    }
+    public void keyPressed(KeyEvent e) {
+        int keyCode = e.getKeyCode();
+        if (keyCode == KeyEvent.VK_W || keyCode == KeyEvent.VK_UP) {
+            moveSprite(0, -1);
+        } else if (keyCode == KeyEvent.VK_A || keyCode == KeyEvent.VK_LEFT) {
+            moveSprite(-1, 0);
+        } else if (keyCode == KeyEvent.VK_S || keyCode == KeyEvent.VK_DOWN) {
+            moveSprite(0, 1);
+        } else if (keyCode == KeyEvent.VK_D || keyCode == KeyEvent.VK_RIGHT) {
+            moveSprite(1, 0);
+        }
+    }
+
+    private void setupKeyListener() {
+        drawPanel.setFocusable(true);
+        drawPanel.requestFocus(); // Ensure the panel has focus
+        drawPanel.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+                int keyCode = e.getKeyCode();
+                if (keyCode == KeyEvent.VK_W || keyCode == KeyEvent.VK_UP) {
+                    moveSprite(0, -10);
+                } else if (keyCode == KeyEvent.VK_A || keyCode == KeyEvent.VK_LEFT) {
+                    moveSprite(-10, 0);
+                } else if (keyCode == KeyEvent.VK_S || keyCode == KeyEvent.VK_DOWN) {
+                    moveSprite(0, 10);
+                } else if (keyCode == KeyEvent.VK_D || keyCode == KeyEvent.VK_RIGHT) {
+                    moveSprite(10, 0);
+                }
+            }
+        });
     }
 }
