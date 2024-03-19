@@ -11,6 +11,12 @@ public class Sprite {
             x += dx;
             y += dy;
         }
+        public int getX() {
+            return x;
+        }
+        public int getY() {
+            return y;
+        }
         public void draw(Graphics g) {
             g.setColor(Color.RED);
             g.fillRect(x, y, 10, 10);

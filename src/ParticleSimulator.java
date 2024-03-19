@@ -39,6 +39,7 @@ public class ParticleSimulator extends JFrame {
     private final ForkJoinPool pool;
     private final JComboBox<String> mode;
     private Sprite sprite;
+    private boolean explorer = false;
     public ParticleSimulator() {
         super("Particle Simulator");
         pool = new ForkJoinPool();
@@ -80,6 +81,7 @@ public class ParticleSimulator extends JFrame {
                 inputPanel.repaint();
                 if(option == "Developer Mode"){
                     System.out.println("Developer Mode");
+                    explorer = false;
                     sprite = null;
                     showCombobox(inputPanel, true);
                     // get selected string from combobox
@@ -91,6 +93,7 @@ public class ParticleSimulator extends JFrame {
                 }
                 else if(option == "Explorer Mode"){
                     System.out.println("Explorer Mode");
+                    explorer = true;
                     showModeCombobox(inputPanel);
                     sprite = new Sprite(100, 100); // temp location
                     setupKeyListener();
@@ -489,10 +492,27 @@ public class ParticleSimulator extends JFrame {
     }
 
     class DrawPanel extends JPanel {
+        private static final int PERIPHERY_WIDTH = 33;
+        private static final int PERIPHERY_HEIGHT = 19;
         @Override
         protected void paintComponent(Graphics g) {
             super.paintComponent(g);
             g.setColor(Color.BLACK);
+
+            if(explorer){
+                explorer(g);
+            }
+            else{
+                developer(g);
+            }
+        }
+
+        private void explorer(Graphics g){
+            // TODO: draw periphery, render particles within the periphery
+            sprite.draw(g);
+        }
+
+        private void developer(Graphics g){
             for (Particle p : particles) {
                 p.draw(g);
             }
