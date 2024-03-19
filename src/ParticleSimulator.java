@@ -492,8 +492,8 @@ public class ParticleSimulator extends JFrame {
     }
 
     class DrawPanel extends JPanel {
-        private static final int PERIPHERY_WIDTH = 33;
-        private static final int PERIPHERY_HEIGHT = 19;
+        private int peripheryWidth = 33;
+        private int peripheryHeight = 19;
         @Override
         protected void paintComponent(Graphics g) {
             super.paintComponent(g);
@@ -507,10 +507,44 @@ public class ParticleSimulator extends JFrame {
             }
         }
 
-        private void explorer(Graphics g){
-            // TODO: draw periphery, render particles within the periphery
-            sprite.draw(g);
+        private void explorer(Graphics g) {
+            int canvasWidth = drawPanel.getWidth();
+            int canvasHeight = drawPanel.getHeight();
+            int spriteCenterX = sprite.getX();
+            int spriteCenterY = sprite.getY();
+
+            int leftBound = spriteCenterX - peripheryWidth / 2;
+            int rightBound = spriteCenterX + peripheryWidth / 2;
+            int topBound = spriteCenterY + peripheryHeight / 2;
+            int bottomBound = spriteCenterY - peripheryHeight / 2;
+
+            double scaleX = (double) canvasWidth / peripheryWidth;
+            double scaleY = (double) canvasHeight / peripheryHeight;
+
+            int scaledSpriteX = (int) ((spriteCenterX - leftBound) * scaleX);
+            int scaledSpriteY = (int) ((spriteCenterY - bottomBound) * scaleY);
+
+            sprite.draw(g, drawPanel);
+        
+            // Render particles within the periphery, adjusting their positions and scaling
+            for (Particle particle : particles) {
+                if (particle.getX() >= leftBound && particle.getX() <= rightBound &&
+                    particle.getY() >= bottomBound && particle.getY() <= topBound) {
+                    int scaledParticleX = (int) ((particle.getX() - leftBound) * scaleX);
+                    int scaledParticleY = (int) ((particle.getY() - bottomBound) * scaleY);
+                    particle.drawScaled(g, scaledParticleX, scaledParticleY, scaleX, scaleY);
+                }
+            }
+        
+            // Draw FPS on the canvas
+            String test = "SPRITE X: " + sprite.getX() + "SPRITE Y: " + sprite.getY();
+            g.drawString(test, 10, 20);
+            
+            actualFramesDrawn.incrementAndGet();
         }
+        
+        
+        
 
         private void developer(Graphics g){
             for (Particle p : particles) {
@@ -518,7 +552,7 @@ public class ParticleSimulator extends JFrame {
             }
             walls.parallelStream().forEach(w -> w.draw(g));
             if(sprite != null){
-                sprite.draw(g);
+                sprite.draw(g, drawPanel);
             }
 
             g.drawString("FPS: " + fps, 10, 20);
@@ -593,10 +627,20 @@ public class ParticleSimulator extends JFrame {
             this.angle = Math.toRadians(angle);
             this.velocity = velocity;
         }
-
+        public void drawScaled(Graphics g, int x, int y, double scaleX, double scaleY) {
+            // Adjust the size and position of the sprite or particle for drawing
+            int diameter = (int) (10 * Math.min(scaleX, scaleY)); // Example scaling for size
+            g.fillOval(x, y, diameter, diameter);
+        }
         public void move(double deltaTime) {
             x += velocity * Math.cos(angle) * deltaTime;
             y += velocity * Math.sin(angle) * deltaTime;
+        }
+        public double getX(){
+            return x;
+        }
+        public double getY(){
+            return y;
         }
         public void checkCollisionWithBounds(DrawPanel drawPanel) {
             if (x < 0 || x > drawPanel.getWidth()) {
