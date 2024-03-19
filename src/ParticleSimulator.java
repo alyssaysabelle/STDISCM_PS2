@@ -517,15 +517,16 @@ public class ParticleSimulator extends JFrame {
             int rightBound = spriteCenterX + peripheryWidth / 2;
             int topBound = spriteCenterY + peripheryHeight / 2;
             int bottomBound = spriteCenterY - peripheryHeight / 2;
-
+            System.out.println("Left:" + leftBound + " Right:" + rightBound );
+            System.out.println("Top:" + topBound + " Bottom:" + bottomBound );
             double scaleX = (double) canvasWidth / peripheryWidth;
             double scaleY = (double) canvasHeight / peripheryHeight;
 
             sprite.draw(g, drawPanel);
-        
+            //TODO: FIx logic here
             // Render particles within the periphery, adjusting their positions and scaling
             for (Particle particle : particles) {
-                System.out.println("Particle X:" + particle.getX() + " Y:" + particle.getY() );
+                
                 if (particle.getX() >= leftBound && particle.getX() <= rightBound &&
                     particle.getY() >= bottomBound && particle.getY() <= topBound) {
                     System.out.println("IM BEING Rendered");
