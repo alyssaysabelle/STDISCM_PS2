@@ -521,21 +521,19 @@ public class ParticleSimulator extends JFrame {
             double scaleX = (double) canvasWidth / peripheryWidth;
             double scaleY = (double) canvasHeight / peripheryHeight;
 
-            int scaledSpriteX = (int) ((spriteCenterX - leftBound) * scaleX);
-            int scaledSpriteY = (int) ((spriteCenterY - bottomBound) * scaleY);
-
             sprite.draw(g, drawPanel);
         
             // Render particles within the periphery, adjusting their positions and scaling
             for (Particle particle : particles) {
+                System.out.println("Particle X:" + particle.getX() + " Y:" + particle.getY() );
                 if (particle.getX() >= leftBound && particle.getX() <= rightBound &&
                     particle.getY() >= bottomBound && particle.getY() <= topBound) {
+                    System.out.println("IM BEING Rendered");
                     int scaledParticleX = (int) ((particle.getX() - leftBound) * scaleX);
                     int scaledParticleY = (int) ((particle.getY() - bottomBound) * scaleY);
                     particle.drawScaled(g, scaledParticleX, scaledParticleY, scaleX, scaleY);
                 }
             }
-        
             // Draw FPS on the canvas
             String test = "SPRITE X: " + sprite.getX() + "SPRITE Y: " + sprite.getY();
             g.drawString(test, 10, 20);
@@ -627,10 +625,14 @@ public class ParticleSimulator extends JFrame {
             this.angle = Math.toRadians(angle);
             this.velocity = velocity;
         }
-        public void drawScaled(Graphics g, int x, int y, double scaleX, double scaleY) {
-            // Adjust the size and position of the sprite or particle for drawing
-            int diameter = (int) (10 * Math.min(scaleX, scaleY)); // Example scaling for size
-            g.fillOval(x, y, diameter, diameter);
+        public void drawScaled(Graphics g, int scaledX, int scaledY, double scaleX, double scaleY) {
+            int particleSize = 10; // Original size of the particle, adjust as needed
+            int scaledWidth = (int) (particleSize * scaleX);
+            int scaledHeight = (int) (particleSize * scaleY);
+    
+            // Set color for the particle
+            g.setColor(Color.BLUE); // Or any color you prefer for particles
+            g.fillRect(scaledX, scaledY, scaledWidth, scaledHeight);
         }
         public void move(double deltaTime) {
             x += velocity * Math.cos(angle) * deltaTime;
