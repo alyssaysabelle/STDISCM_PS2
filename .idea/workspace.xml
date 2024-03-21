@@ -4,7 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="657e8e63-989a-4878-b455-d7048de60234" name="Changes" comment="changed sprite color for visibility, fixed movement to 1 per movement" />
+    <list default="true" id="657e8e63-989a-4878-b455-d7048de60234" name="Changes" comment="changed sprite color for visibility, fixed movement to 1 per movement">
+      <change beforePath="$PROJECT_DIR$/src/ParticleSimulator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ParticleSimulator.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Sprite.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Sprite.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -85,7 +88,7 @@
       <updated>1710829063576</updated>
       <workItem from="1711020382818" duration="119000" />
       <workItem from="1711026103626" duration="1364000" />
-      <workItem from="1711036581883" duration="3326000" />
+      <workItem from="1711036581883" duration="3789000" />
     </task>
     <task id="LOCAL-00001" summary="added particle simulator">
       <option name="closed" value="true" />

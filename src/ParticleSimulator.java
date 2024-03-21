@@ -8,8 +8,6 @@ import java.awt.geom.Line2D;
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
 import java.util.Optional;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 import java.util.concurrent.ForkJoinPool;
 import java.util.concurrent.RecursiveAction;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -158,46 +156,7 @@ public class ParticleSimulator extends JFrame {
         inputPanel.add(new JLabel(" Mode:"));
         inputPanel.add(mode);
     }
-
-    /*
-    private void showWallInput(JPanel inputPanel){
-        inputPanel.add(new JLabel(" Add new wall"));
-        inputPanel.add(new JLabel());
-        inputPanel.add(new JLabel(" Start (x,y):"));
-        inputPanel.add(startWallField);
-        inputPanel.add(new JLabel(" End (x,y):"));
-        inputPanel.add(endWallField);
-        inputPanel.add(new JPanel());
-        JButton addWallButton = new JButton("Add Wall");
-        inputPanel.add(addWallButton);
-        inputPanel.add(new JPanel());
-        inputPanel.add(new JPanel());
-
-        addWallButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                try {
-                    String startText = startWallField.getText();
-                    String endText = endWallField.getText();
-                    String[] startCoords = startText.split(",");
-                    String[] endCoords = endText.split(",");
-                    int startX = Integer.parseInt(startCoords[0].trim());
-                    int startY = Integer.parseInt(startCoords[1].trim());
-                    int endX = Integer.parseInt(endCoords[0].trim());
-                    int endY = Integer.parseInt(endCoords[1].trim());
-                    if (startX < 0 || startY < 0 || endX < 0 || endY < 0 || startX > drawPanel.getWidth() || startY > drawPanel.getHeight() || endX > drawPanel.getWidth() || endY > drawPanel.getHeight()) {
-                        JOptionPane.showMessageDialog(ParticleSimulator.this, "Invalid input. Please check your values.", "Error", JOptionPane.ERROR_MESSAGE);
-                        return;
-                    }
-                    walls.add(new Wall(startX, startY, endX, endY));
-                    drawPanel.repaint();
-                } catch (NumberFormatException | ArrayIndexOutOfBoundsException ex) {
-                    JOptionPane.showMessageDialog(ParticleSimulator.this, "Invalid input format. Please use format: x,y", "Error", JOptionPane.ERROR_MESSAGE);
-                }
-            }
-        });
-    }
-     */
+    
     private void showCombobox(JPanel inputPanel, Boolean show){
         //showWallInput(inputPanel);
         inputPanel.add(new JLabel(" Add:"));
@@ -518,33 +477,28 @@ public class ParticleSimulator extends JFrame {
             int rightBound = spriteCenterX + peripheryWidth / 2;
             int topBound = spriteCenterY + peripheryHeight / 2;
             int bottomBound = spriteCenterY - peripheryHeight / 2;
-            System.out.println("Left:" + leftBound + " Right:" + rightBound );
-            System.out.println("Top:" + topBound + " Bottom:" + bottomBound );
+
             double scaleX = (double) canvasWidth / peripheryWidth;
             double scaleY = (double) canvasHeight / peripheryHeight;
 
             sprite.draw(g, drawPanel);
-            //TODO: FIx logic here
-            // Render particles within the periphery, adjusting their positions and scaling
+
             for (Particle particle : particles) {
                 
                 if (particle.getX()+5 >= leftBound && particle.getX() -5<= rightBound &&
                     particle.getY()+5 >= bottomBound && particle.getY()-5 <= topBound) {
                         int relativeX = (int) particle.getX() - leftBound;
                         int relativeY = topBound - (int) particle.getY();
-                
-                        // Apply scaling
+
                         int scaledParticleX = (int) (relativeX * scaleX);
                         int scaledParticleY = (int) (relativeY * scaleY);
                 
-                        // Now you can call drawScaled with the correct scaled positions
                         particle.drawScaled(g, scaledParticleX, scaledParticleY);
                 }
             }
-            // Draw FPS on the canvas
+
             String test = "SPRITE X: " + sprite.getX() + "SPRITE Y: " + sprite.getY();
             g.drawString(test, 10, 20);
-            //g.drawString("FPS: " + fps, 10, 20);
             actualFramesDrawn.incrementAndGet();
         }
         
