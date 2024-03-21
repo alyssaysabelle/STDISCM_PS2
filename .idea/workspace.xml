@@ -6,7 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="657e8e63-989a-4878-b455-d7048de60234" name="Changes" comment="changed sprite color for visibility, fixed movement to 1 per movement">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ParticleSimulator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ParticleSimulator.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Sprite.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Sprite.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -51,6 +51,11 @@
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
 }</component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\Stacy\Desktop\School\AY23-24 TERM 2\STDISCM\STDISCM_PS2\src" />
+    </key>
+  </component>
   <component name="RunManager">
     <configuration name="ParticleSimulator" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="ParticleSimulator" />
@@ -82,7 +87,7 @@
       <updated>1710829063576</updated>
       <workItem from="1711020382818" duration="119000" />
       <workItem from="1711026103626" duration="1364000" />
-      <workItem from="1711036581883" duration="2439000" />
+      <workItem from="1711036581883" duration="3006000" />
     </task>
     <task id="LOCAL-00001" summary="added particle simulator">
       <option name="closed" value="true" />
