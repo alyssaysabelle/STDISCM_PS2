@@ -727,11 +727,11 @@ public class ParticleSimulator extends JFrame {
             public void keyPressed(KeyEvent e) {
                 int keyCode = e.getKeyCode();
                 if (keyCode == KeyEvent.VK_W || keyCode == KeyEvent.VK_UP) {
-                    moveSprite(0, -1);
+                    moveSprite(0, 1);
                 } else if (keyCode == KeyEvent.VK_A || keyCode == KeyEvent.VK_LEFT) {
                     moveSprite(-1, 0);
                 } else if (keyCode == KeyEvent.VK_S || keyCode == KeyEvent.VK_DOWN) {
-                    moveSprite(0, 1);
+                    moveSprite(0, -1);
                 } else if (keyCode == KeyEvent.VK_D || keyCode == KeyEvent.VK_RIGHT) {
                     moveSprite(1, 0);
                 }
