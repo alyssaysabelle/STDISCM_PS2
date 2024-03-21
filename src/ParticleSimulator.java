@@ -531,7 +531,7 @@ public class ParticleSimulator extends JFrame {
                 if (particle.getX()+5 >= leftBound && particle.getX() -5<= rightBound &&
                     particle.getY()+5 >= bottomBound && particle.getY()-5 <= topBound) {
                         int relativeX = (int) particle.getX() - leftBound;
-                        int relativeY = (int) particle.getY() - bottomBound;
+                        int relativeY = bottomBound - (int) particle.getY();
                 
                         // Apply scaling
                         int scaledParticleX = (int) (relativeX * scaleX);
