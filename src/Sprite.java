@@ -20,13 +20,14 @@ public class Sprite {
     private void loadImages() {
         try {
             images = new BufferedImage[3];
-            images[0] = ImageIO.read(new File("src/pingu.png"));
-            images[1] = ImageIO.read(new File("src/pingu2.png"));
-            images[2] = ImageIO.read(new File("src/pingu.png"));
+            images[0] = ImageIO.read(getClass().getResourceAsStream("/pingu.png"));
+            images[1] = ImageIO.read(getClass().getResourceAsStream("/pingu2.png"));
+            images[2] = ImageIO.read(getClass().getResourceAsStream("/pingu.png"));
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
+    
 
     public void move(int dx, int dy) {
         x += dx;
