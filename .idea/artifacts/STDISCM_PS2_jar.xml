@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="STDISCM_PS2:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/STDISCM_PS2_jar</output-path>
+    <root id="archive" name="STDISCM_PS2.jar">
+      <element id="module-output" name="STDISCM_PS2" />
+    </root>
+  </artifact>
+</component>
