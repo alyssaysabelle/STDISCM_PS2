@@ -484,7 +484,6 @@ public class ParticleSimulator extends JFrame {
             sprite.draw(g, drawPanel);
 
             for (Particle particle : particles) {
-                
                 if (particle.getX()+5 >= leftBound && particle.getX() -5<= rightBound &&
                     particle.getY()+5 >= bottomBound && particle.getY()-5 <= topBound) {
                         int relativeX = (int) particle.getX() - leftBound;
@@ -492,7 +491,6 @@ public class ParticleSimulator extends JFrame {
 
                         int scaledParticleX = (int) (relativeX * scaleX);
                         int scaledParticleY = (int) (relativeY * scaleY);
-                
                         particle.drawScaled(g, scaledParticleX, scaledParticleY);
                 }
             }
@@ -501,9 +499,8 @@ public class ParticleSimulator extends JFrame {
             g.drawString(test, 10, 20);
             actualFramesDrawn.incrementAndGet();
         }
-        
-        
-        
+
+
 
         private void developer(Graphics g){
             for (Particle p : particles) {
@@ -668,8 +665,19 @@ public class ParticleSimulator extends JFrame {
     // SPRITE
     public void moveSprite(int dx, int dy) {
         if (sprite != null) {
-            sprite.move(dx, dy);
-            drawPanel.repaint();
+            int newX = sprite.getX() + dx;
+            int newY = sprite.getY() + dy;
+            int canvasWidth = drawPanel.getWidth();
+            int canvasHeight = drawPanel.getHeight();
+            int spriteWidth = sprite.getX();
+            int spriteHeight = sprite.getY();
+
+            if (newX >= 0 && newX + spriteWidth <= canvasWidth && newY >= 0 && newY + spriteHeight <= canvasHeight) {
+                sprite.move(dx, dy);
+                drawPanel.repaint();
+            }
+            else
+                JOptionPane.showMessageDialog(this, "Sprite reached the end of the canvas", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
 
