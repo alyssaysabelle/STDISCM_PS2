@@ -149,7 +149,7 @@ public class ParticleSimulator extends JFrame {
         splitPane.setDividerLocation(350);
         add(splitPane);
         controlPanel.add(inputPanel, BorderLayout.NORTH);
-        particles.add(new Particle(100.0,100.0,45,0));
+
 
     }
     private void showModeCombobox(JPanel inputPanel){
@@ -495,8 +495,8 @@ public class ParticleSimulator extends JFrame {
                 }
             }
 
-            String test = "SPRITE X: " + sprite.getX() + "SPRITE Y: " + sprite.getY();
-            g.drawString(test, 10, 20);
+            
+            g.drawString("FPS: " + fps, 10, 20);
             actualFramesDrawn.incrementAndGet();
         }
 
